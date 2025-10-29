@@ -5,7 +5,6 @@ namespace App\Traits;
 use App\Models\Employee;
 use App\Models\Hours;
 use App\Models\Job;
-use App\Models\User;
 use Carbon\Carbon;
 
 trait ImportTimesheetTrait
@@ -78,7 +77,7 @@ trait ImportTimesheetTrait
     public bool $satOvernight = false;
     public bool $sunOvernight = false;
     public ?int $period_id;
-    public function populateFromTimesheet($hours, $weekending, $weekNumber): void
+    public function populateFromTimesheet($hours, $weekending, $weekNumber, $empNo): void
     {
         $this->hoursMon1 = number_format($this->getHours($hours['start_mon_1'], $hours['finish_mon_1']), 2);
         $this->hoursMon2 = number_format($this->getHours($hours['start_mon_2'], $hours['finish_mon_2']), 2);
@@ -190,14 +189,13 @@ trait ImportTimesheetTrait
         $this->satTotal = $this->totalHoursBreakSat + $this->totalHoursSat2 + $this->totalHoursSat3;
         $this->sunTotal = $this->totalHoursBreakSun + $this->totalHoursSun2 + $this->totalHoursSun3;
         $this->weekNumber = $weekNumber;
-        $this->saveHours($hours['user_id'], $weekending);
+        $this->saveHours($hours['user_id'], $weekending, $empNo);
     }
 
-    public function saveHours($userId, $weekending): void
+    public function saveHours($userId, $weekending, $empNo): void
     {
-        $user = User::query()->where('id', $userId)->first();
-        $employee = Employee::query()->where('emp_no', $user->emp_no)->first();
-        $existingHours = Hours::query()->where('emp_no', $user->emp_no)->where('week_ending', $weekending)->first();
+        $employee = Employee::query()->where('emp_no', $empNo)->first();
+        $existingHours = Hours::query()->where('emp_no', $empNo)->where('week_ending', $weekending)->first();
         if($existingHours == null) {
             $hours = new Hours();
         } else {

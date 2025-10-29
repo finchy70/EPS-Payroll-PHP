@@ -3,6 +3,7 @@
 return [
     'bearer_token' => env(key: 'API_BEARER_TOKEN', default: '1|HvvM75CTvTAYfa8Q1Cz6YlHZSO3aRmyewgVPZCwbeace55b7'),
     'timesheet_endpoint' => env(key: 'TIMESHEET_API_ENDPOINT', default: 'https://site-manager.test/api/timesheet'),
+    'user_endpoint' => env(key: 'USER_API_ENDPOINT', default: 'https://site-manager.test/api/timesheet'),
     /*
     |--------------------------------------------------------------------------
     | Application Name
