@@ -10,6 +10,7 @@ use App\Livewire\PeriodSummary;
 use App\Livewire\ProjectExport;
 use App\Livewire\ProjectHours;
 use App\Livewire\ProjectHoursEmployee;
+use App\Livewire\ProjectHoursWeekly;
 use App\Livewire\Setup\Leaver;
 use App\Livewire\Setup\NewStarter;
 use App\Models\Period;
@@ -32,6 +33,7 @@ Route::get('/period-summary', action: PeriodSummary::class)->name('period-summar
 Route::get('/project-hours', action: ProjectHours::class)->name('project-hours');
 Route::get('/project-export', action: ProjectExport::class)->name('project-export');
 Route::get('/project-hours-employee', action: ProjectHoursEmployee::class)->name('project-hours-employee');
+Route::get('/project-hours-weekly', action: ProjectHoursWeekly::class)->name('project-hours-weekly');
 
 Route::get('/setup-menu', function () {
     return view('setup.setup-menu');

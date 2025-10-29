@@ -14,14 +14,13 @@ class NativeAppServiceProvider implements ProvidesPhpIni
      */
     public function boot(): void
     {
-//        Menu::create(
-//            Menu::app(), // Only on macOS
-//            Menu::file(),
-//            Menu::edit(),
-//            Menu::view(),
-//            Menu::window(),
-//        );
-        Window::open()->height(1000)->width(1400)->title('EPS Payroll');
+        Menu::create(
+            Menu::file(),
+            Menu::edit(),
+            Menu::view(),
+            Menu::window(),
+        );
+        Window::open()->height(1000)->width(1200)->title('EPS Payroll');
     }
 
     /**
