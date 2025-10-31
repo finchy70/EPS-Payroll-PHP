@@ -12,7 +12,7 @@
     </div>
 
 
-    <flux:modal name="import-timesheets" class="md:w-1/2">
+    <flux:modal :dismissible="false" name="import-timesheets" class="md:w-1/2">
         <div class="space-y-6">
             <div>
                 <flux:heading size="lg">Confirm Import!</flux:heading>

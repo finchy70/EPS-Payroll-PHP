@@ -6,6 +6,7 @@ use App\Models\Employee;
 use App\Models\Hours;
 use App\Models\Job;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 trait ImportTimesheetTrait
 {
@@ -77,8 +78,9 @@ trait ImportTimesheetTrait
     public bool $satOvernight = false;
     public bool $sunOvernight = false;
     public ?int $period_id;
-    public function populateFromTimesheet($hours, $weekending, $weekNumber, $empNo): void
+    public function populateFromTimesheet($hours, $weekending, $weekNumber, $employee): void
     {
+
         $this->hoursMon1 = number_format($this->getHours($hours['start_mon_1'], $hours['finish_mon_1']), 2);
         $this->hoursMon2 = number_format($this->getHours($hours['start_mon_2'], $hours['finish_mon_2']), 2);
         $this->hoursMon3 = number_format($this->getHours($hours['start_mon_3'], $hours['finish_mon_3']), 2);
@@ -189,16 +191,17 @@ trait ImportTimesheetTrait
         $this->satTotal = $this->totalHoursBreakSat + $this->totalHoursSat2 + $this->totalHoursSat3;
         $this->sunTotal = $this->totalHoursBreakSun + $this->totalHoursSun2 + $this->totalHoursSun3;
         $this->weekNumber = $weekNumber;
-        $this->saveHours($hours['user_id'], $weekending, $empNo);
+        $this->saveHours($weekending, $employee);
     }
 
-    public function saveHours($userId, $weekending, $empNo): void
+    public function saveHours($weekending, $employee): void
     {
-        $employee = Employee::query()->where('emp_no', $empNo)->first();
-        $existingHours = Hours::query()->where('emp_no', $empNo)->where('week_ending', $weekending)->first();
+        $existingHours = Hours::query()->where('emp_no', $employee->emp_no)->where('week_ending', $weekending)->first();
         if($existingHours == null) {
+            Log::info("Importing Timesheet {$employee->emp_no} - {$employee->name} - WE {$weekending}.");
             $hours = new Hours();
         } else {
+            Log::info("Updating Timesheet {$employee->emp_no} - {$employee->name} - WE {$weekending}.");
             $hours = $existingHours;
         }
         $hours->week_ending = Carbon::parse($weekending);

@@ -79,7 +79,7 @@ class PayrollEntry extends Component
         if($hours != null) {
             $this->weekNumber = $hours->week_number;
             $this->info = "Values loaded from EPS Payroll App.";
-            $this->populateHours('payroll');
+            $this->populateHours();
         } else {
             $this->info = "No timesheet found for this employee. A blank hours record has been created";
             $this->createBlankHoursRecord();
@@ -88,22 +88,10 @@ class PayrollEntry extends Component
 
     }
 
-    private function populateHours($type): void
+    private function populateHours(): void
     {
-        if ($type == 'payroll') {
-            $hours = Hours::query()->where('week_ending', Carbon::parse($this->weekEnding))->where('emp_no', $this->employee->emp_no)->first();
-            $this->populateFromHours($hours);
-        }
-//        else {
-//            $user = User::query()->where('emp_no', $this->employee->emp_no)->first();
-//            $hours = Timesheet::query()->where('week_ending', Carbon::parse($this->weekEnding))->where('user_id', $user->id)->first();
-//            if($hours != null){
-//                $this->populateFromTimesheet($hours, $this->weekEnding);
-//            } else {
-//                $this->info = "No timesheet found for this employee. A blank hours record has been created";
-//                $this->createBlankHoursRecord();
-//            }
-//        }
+        $hours = Hours::query()->where('week_ending', Carbon::parse($this->weekEnding))->where('emp_no', $this->employee->emp_no)->first();
+        $this->populateFromHours($hours);
     }
 
     public function createBlankHoursRecord(): void

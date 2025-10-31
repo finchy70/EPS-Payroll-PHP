@@ -95,7 +95,7 @@ class TimesheetImport extends Component
             if ($result['exists'] == 'exists') {
                 $timesheetWeek1Hours = $result['data']['timesheets'][$this->period->we1];
                 if($timesheetWeek1Hours != null){
-                    $this->populateFromTimesheet(collect($timesheetWeek1Hours), Carbon::parse($this->period->we1), 1, $employee->emp_no);
+                    $this->populateFromTimesheet(collect($timesheetWeek1Hours), Carbon::parse($this->period->we1), 1, $employee);
                 } else {
                     $this->createBlankHoursRecord(1,$this->period->we1, $employee);
                 }
@@ -107,7 +107,7 @@ class TimesheetImport extends Component
             if ($result['exists'] == 'exists') {
                 $timesheetWeek2Hours = $result['data']['timesheets'][$this->period->we2];
                 if($timesheetWeek2Hours != null){
-                    $this->populateFromTimesheet(collect($timesheetWeek2Hours), Carbon::parse($this->period->we2), 1, $employee->emp_no);
+                    $this->populateFromTimesheet(collect($timesheetWeek2Hours), Carbon::parse($this->period->we2), 1, $employee);
                 } else {
                     $this->createBlankHoursRecord(2,$this->period->we2, $employee);
                 }
@@ -119,7 +119,7 @@ class TimesheetImport extends Component
             if ($result['exists'] == 'exists') {
                 $timesheetWeek3Hours = $result['data']['timesheets'][$this->period->we3];;
                 if($timesheetWeek3Hours != null){
-                    $this->populateFromTimesheet(collect($timesheetWeek3Hours), Carbon::parse($this->period->we3), 1, $employee->emp_no);
+                    $this->populateFromTimesheet(collect($timesheetWeek3Hours), Carbon::parse($this->period->we3), 1, $employee);
                 } else {
                     $this->createBlankHoursRecord(3,$this->period->we3, $employee);
                 }
@@ -131,7 +131,7 @@ class TimesheetImport extends Component
             if ($result['exists'] == 'exists') {
                 $timesheetWeek4Hours = $result['data']['timesheets'][$this->period->we4];
                 if($timesheetWeek4Hours != null){
-                    $this->populateFromTimesheet(collect($timesheetWeek4Hours), Carbon::parse($this->period->we4), 1, $employee->emp_no);
+                    $this->populateFromTimesheet(collect($timesheetWeek4Hours), Carbon::parse($this->period->we4), 1, $employee);
                 } else {
                     $this->createBlankHoursRecord(4,$this->period->we4, $employee);
                 }
@@ -144,7 +144,7 @@ class TimesheetImport extends Component
                 if ($result['exists'] == 'exists') {
                     $timesheetWeek5Hours = $result['data']['timesheets'][$this->period->we5];
                     if($timesheetWeek5Hours != null){
-                        $this->populateFromTimesheet(collect($timesheetWeek5Hours), Carbon::parse($this->period->we5), 1, $employee->emp_no);
+                        $this->populateFromTimesheet(collect($timesheetWeek5Hours), Carbon::parse($this->period->we5), 1, $employee);
                     } else {
                         $this->createBlankHoursRecord(5,$this->period->we5, $employee);
                     }
@@ -155,6 +155,7 @@ class TimesheetImport extends Component
                 }
             }
         }
+        Log::info('Timesheet Import Complete.');
         // Use $missingEmployees and $missingWeeks to provide feedback.
         $this->modal('import-timesheets')->close();
         flash()->success('Timesheets Imported Successfully.');
@@ -163,16 +164,23 @@ class TimesheetImport extends Component
 
     public function createBlankHoursRecord($weekNumber, $weekEnding, $employee): void
     {
-        Hours::query()->create([
-            'week_ending' => Carbon::parse($weekEnding),
-            'week_number' => $weekNumber,
-            'employee' => $employee->name,
-            'emp_no' => $employee->emp_no,
-            'period_id' => $this->period->id,
-            'period' => $this->period->month.'-'.$this->period->year,
-            'expenses' => 0.00,
-            'bonus_hours' => 0.00,
-        ]);
+        $hours = Hours::query()->where('emp_no', $employee->emp_no)->where('week_ending', $weekEnding)->first();
+        if($hours == null){
+            Log::info("Creating Blank Timesheet {$employee->emp_no} - {$employee->name} - WE {$this->period->we1}.");
+            Hours::query()->create([
+                'week_ending' => Carbon::parse($weekEnding),
+                'week_number' => $weekNumber,
+                'employee' => $employee->name,
+                'emp_no' => $employee->emp_no,
+                'period_id' => $this->period->id,
+                'period' => $this->period->month.'-'.$this->period->year,
+                'expenses' => 0.00,
+                'bonus_hours' => 0.00,
+            ]);
+        } else {
+            Log::info("Blank Record Exists {$employee->emp_no} - {$employee->name} - WE {$this->period->we1}.");
+        }
+
     }
 
     public function getPeriod($id): string{
