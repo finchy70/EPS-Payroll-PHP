@@ -107,7 +107,7 @@ class TimesheetImport extends Component
             if ($result['exists'] == 'exists') {
                 $timesheetWeek2Hours = $result['data']['timesheets'][$this->period->we2];
                 if($timesheetWeek2Hours != null){
-                    $this->populateFromTimesheet(collect($timesheetWeek2Hours), Carbon::parse($this->period->we2), 1, $employee);
+                    $this->populateFromTimesheet(collect($timesheetWeek2Hours), Carbon::parse($this->period->we2), 2, $employee);
                 } else {
                     $this->createBlankHoursRecord(2,$this->period->we2, $employee);
                 }
@@ -119,7 +119,7 @@ class TimesheetImport extends Component
             if ($result['exists'] == 'exists') {
                 $timesheetWeek3Hours = $result['data']['timesheets'][$this->period->we3];;
                 if($timesheetWeek3Hours != null){
-                    $this->populateFromTimesheet(collect($timesheetWeek3Hours), Carbon::parse($this->period->we3), 1, $employee);
+                    $this->populateFromTimesheet(collect($timesheetWeek3Hours), Carbon::parse($this->period->we3), 3, $employee);
                 } else {
                     $this->createBlankHoursRecord(3,$this->period->we3, $employee);
                 }
@@ -131,7 +131,7 @@ class TimesheetImport extends Component
             if ($result['exists'] == 'exists') {
                 $timesheetWeek4Hours = $result['data']['timesheets'][$this->period->we4];
                 if($timesheetWeek4Hours != null){
-                    $this->populateFromTimesheet(collect($timesheetWeek4Hours), Carbon::parse($this->period->we4), 1, $employee);
+                    $this->populateFromTimesheet(collect($timesheetWeek4Hours), Carbon::parse($this->period->we4), 4, $employee);
                 } else {
                     $this->createBlankHoursRecord(4,$this->period->we4, $employee);
                 }
@@ -144,7 +144,7 @@ class TimesheetImport extends Component
                 if ($result['exists'] == 'exists') {
                     $timesheetWeek5Hours = $result['data']['timesheets'][$this->period->we5];
                     if($timesheetWeek5Hours != null){
-                        $this->populateFromTimesheet(collect($timesheetWeek5Hours), Carbon::parse($this->period->we5), 1, $employee);
+                        $this->populateFromTimesheet(collect($timesheetWeek5Hours), Carbon::parse($this->period->we5), 5, $employee);
                     } else {
                         $this->createBlankHoursRecord(5,$this->period->we5, $employee);
                     }

@@ -137,37 +137,51 @@ class PayrollEntry extends Component
         $this->totalHoursBreakMon = ($removeBreak) ? number_format($hours->mon1 - 0.5, 2) : number_format($hours->mon1);
         $this->hoursMon1 = number_format($hours->mon1,2);
         $this->hoursMon2 = number_format($hours->mon2,2);
+        $this->totalHoursMon2 = number_format($hours->mon2,2);
         $this->hoursMon3 = number_format($hours->mon3,2);
+        $this->totalHoursMon3 = number_format($hours->mon2,2);
         $removeBreak = $this->checkForBreak($hours->tue1, $hours->tue2, $hours->tue3);
         $this->totalHoursBreakTues = ($removeBreak) ? number_format($hours->tue1 - 0.5, 2) : number_format($hours->tue1);
         $this->hoursTues1 = number_format($hours->tue1,2);
         $this->hoursTues2 = number_format($hours->tue2,2);
+        $this->totalHoursTues2 = number_format($hours->tue2,2);
         $this->hoursTues3 = number_format($hours->tue3,2);
+        $this->totalHoursTues3 = number_format($hours->tue3,2);
         $removeBreak = $this->checkForBreak($hours->wed1, $hours->wed2, $hours->wed3);
         $this->totalHoursBreakWed = ($removeBreak) ? number_format($hours->wed1 - 0.5, 2) : number_format($hours->wed1);
         $this->hoursWed1 = number_format($hours->wed1,2);
         $this->hoursWed2 = number_format($hours->wed2,2);
+        $this->totalHoursWed2 = number_format($hours->wed2,2);
         $this->hoursWed3 = number_format($hours->wed3,2);
-        $removeBreak = $this->checkForBreak($hours->thur1, $hours->thur2, $hours->thur3);
-        $this->totalHoursBreakThurs = ($removeBreak) ? number_format($hours->thu1 - 0.5, 2) : number_format($hours->thur1);
+        $this->totalHoursWed3 = number_format($hours->wed3,2);
+        $removeBreak = $this->checkForBreak($hours->thu1, $hours->thu2, $hours->thu3);
+        $this->totalHoursBreakThurs = ($removeBreak) ? number_format($hours->thu1 - 0.5, 2) : number_format($hours->thu1);
         $this->hoursThurs1 = number_format($hours->thu1,2);
         $this->hoursThurs2 = number_format($hours->thu2,2);
+        $this->totalHoursThurs2 = number_format($hours->thu2,2);
         $this->hoursThurs3 = number_format($hours->thu3,2);
+        $this->totalHoursThurs3 = number_format($hours->thu3,2);
         $removeBreak = $this->checkForBreak($hours->fri1, $hours->fri2, $hours->fri3);
         $this->totalHoursBreakFri = ($removeBreak) ? number_format($hours->fri1 - 0.5, 2) : number_format($hours->fri1);
         $this->hoursFri1 = number_format($hours->fri1,2);
         $this->hoursFri2 = number_format($hours->fri2,2);
+        $this->totalHoursFri2 = number_format($hours->fri2,2);
         $this->hoursFri3 = number_format($hours->fri3,2);
+        $this->totalHoursFri3 = number_format($hours->fri3,2);
         $removeBreak = $this->checkForBreak($hours->sat1, $hours->sat2, $hours->sat3);
         $this->totalHoursBreakSat = ($removeBreak) ? number_format($hours->sat1 - 0.5, 2) : number_format($hours->sat1);
         $this->hoursSat1 = number_format($hours->sat1,2);
         $this->hoursSat2 = number_format($hours->sat2,2);
+        $this->totalHoursSat2 = number_format($hours->sat2,2);
         $this->hoursSat3 = number_format($hours->sat3,2);
+        $this->totalHoursSat3 = number_format($hours->sat3,2);
         $removeBreak = $this->checkForBreak($hours->sun1, $hours->sun2, $hours->sun3);
         $this->totalHoursBreakSun = ($removeBreak) ? number_format($hours->sun1 - 0.5, 2) : number_format($hours->sun1);
         $this->hoursSun1 = number_format($hours->sun1,2);
         $this->hoursSun2 = number_format($hours->sun2,2);
+        $this->totalHoursSun2 = number_format($hours->sun2,2);
         $this->hoursSun3 = number_format($hours->sun3,2);
+        $this->totalHoursSun3 = number_format($hours->sun3,2);
 
         $this->jobMon1 = $hours->job_no_mon1;
         $this->siteMon1 = $this->getSite($hours->job_no_mon1);
@@ -244,28 +258,6 @@ class PayrollEntry extends Component
             }
         }
     }
-
-//    public function checkForBreak($day1, $day2, $day3, $climb1 = 0, $climb2 = 0, $climb3 = 0): bool
-//    {
-//        if(($day1 + $day2 + $day3 + $climb1 + $climb2 + $climb3) > 6){
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
-
-//    public function getHours($start, $finish): float
-//    {
-//        $start = Carbon::parse($start);
-//        $finish = Carbon::parse($finish);
-//        if($start > $finish){
-//            $untilMidnight = $start->subSecond()->diffInHours(Carbon::parse('23:59:59'));
-//            $afterMidnight = Carbon::parse('00:00:00')->diffInHours($finish);
-//            return $untilMidnight + $afterMidnight;
-//        } else {
-//            return $start->diffInHours($finish);
-//        }
-//    }
 
     public function back(): void
     {

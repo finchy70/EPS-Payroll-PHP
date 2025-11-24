@@ -96,13 +96,6 @@ class PeriodSummary extends Component
                 $this->setWeek($weekNumber, $i, $week, $sheet);
                 $weekNumber++;
             }
-//            $sheet->setCellValue("A" . $i + $weekNumber + 1, 'Total');
-//            $sheet->getStyle('A' . $i + $weekNumber + 1)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-//            $sheet->getStyle('A' . $i + $weekNumber + 1)
-//                ->getBorders()
-//                ->getOutline()
-//                ->setBorderStyle(Border::BORDER_THIN)
-//                ->setColor(new Color(Color::COLOR_BLACK));
             $sheet->setCellValue("B" . $i + $weekNumber + 1, 'Total');
             $sheet->getStyle('B' . $i + $weekNumber + 1)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('B' . $i + $weekNumber + 1)
@@ -150,7 +143,6 @@ class PeriodSummary extends Component
                 ->setColor(new Color(Color::COLOR_BLACK));
             $i = $i +10;
         }
-
         if(PHP_OS == 'Darwin'){
             $filename = "/Users/paulfinch/Desktop/EPS Payroll/Period Summary - ".$period->month.' - '.$period->year.'.xlsx';
             if(!file_exists("/Users/paulfinch/Desktop/EPS Payroll/"))
@@ -242,7 +234,7 @@ class PeriodSummary extends Component
         {
             $monHours = $monHours - 0.5;
         }
-        $tueHours = $week->tues1 + $week->tues2 + $week->tues3;
+        $tueHours = $week->tue1 + $week->tue2 + $week->tue3;
         if($tueHours > 6)
         {
             $tueHours = $tueHours - 0.5;
